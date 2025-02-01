@@ -186,13 +186,7 @@ mod tests {
             (b'z', 15),
         ];
         for &(input, expected) in &cases {
-            assert_eq!(
-                index_from_consonant(input),
-                Some(expected),
-                "Expected consonant '{}' to map to {}",
-                char::from_u32(input.into()).unwrap(),
-                expected
-            );
+            assert_eq!(index_from_consonant(input), Some(expected));
         }
     }
 
@@ -200,12 +194,7 @@ mod tests {
     fn test_index_from_consonant_invalid() {
         // Non-consonant characters should return None.
         for &input in b"aeiouyx-" {
-            assert_eq!(
-                index_from_consonant(input),
-                None,
-                "Expected '{}' to be invalid as a consonant",
-                char::from_u32(input.into()).unwrap(),
-            );
+            assert_eq!(index_from_consonant(input), None);
         }
     }
 
@@ -221,13 +210,7 @@ mod tests {
             (b'y', 5),
         ];
         for &(input, expected) in &cases {
-            assert_eq!(
-                index_from_vowel(input),
-                Some(expected),
-                "Expected vowel '{}' to map to {}",
-                char::from_u32(input.into()).unwrap(),
-                expected,
-            );
+            assert_eq!(index_from_vowel(input), Some(expected));
         }
     }
 
@@ -235,12 +218,7 @@ mod tests {
     fn test_index_from_vowel_invalid() {
         // Non-vowel characters should return None.
         for &input in b"bcdfghklmnpqrstvxz-" {
-            assert_eq!(
-                index_from_vowel(input),
-                None,
-                "Expected '{}' to be invalid as a vowel",
-                char::from_u32(input.into()).unwrap(),
-            );
+            assert_eq!(index_from_vowel(input), None);
         }
     }
 
@@ -269,13 +247,7 @@ mod tests {
                 b'z' => Some(15),
                 _ => None,
             };
-            assert_eq!(
-                index_from_consonant(byte),
-                expected,
-                "index_from_consonant failed for byte {} ('{}')",
-                byte,
-                char::from_u32(byte.into()).unwrap(),
-            );
+            assert_eq!(index_from_consonant(byte), expected);
         }
     }
 
@@ -293,13 +265,7 @@ mod tests {
                 b'y' => Some(5),
                 _ => None,
             };
-            assert_eq!(
-                index_from_vowel(byte),
-                expected,
-                "index_from_vowel failed for byte {} ('{}')",
-                byte,
-                char::from_u32(byte.into()).unwrap(),
-            );
+            assert_eq!(index_from_vowel(byte), expected);
         }
     }
 
