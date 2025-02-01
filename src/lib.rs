@@ -336,6 +336,18 @@ mod tests {
             assert!(!buf.is_empty());
         }
     }
+
+    #[test]
+    fn test_inner_triggers_decode_3_tuple_corrupted() {
+        // This encoded input is designed to trigger a DecodeError::Corrupted.
+        // It consists of a header and trailer ('x') framing the 6-byte chunk
+        // "abab-b".  Within the chunk, the first three-tuple decodes to a value
+        // where the computed 'high' component is 5 (>= 4), which violates the
+        // valid range and causes an error.
+        let encoded = b"xabab-bx";
+        let result = decode(encoded);
+        assert_eq!(result, Err(DecodeError::Corrupted));
+    }
 }
 
 // Ensure code blocks in `README.md` compile.
