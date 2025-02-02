@@ -5,31 +5,22 @@ use crate::DecodeError;
 const HEADER: u8 = b'x';
 const TRAILER: u8 = b'x';
 
-// one `bool` for every byte. The positions that are set to `true` are the byte
-// values for characters in the alphabet:
+// The alphabet as a byte slice.
+const ALPHABET: &[u8] = b"aeiouybcdfghklmnprstvzx-";
+
+// A const block that computes an array of 256 u8's.
 //
-// ```
-// const ALPHABET: [u8; 24] = *b"aeiouybcdfghklmnprstvzx-";
-// ```
-//
-// This table is generated with the following Ruby script:
-//
-// ```ruby
-// a = Array.new(256, 0)
-// bytes = "aeiouybcdfghklmnprstvzx-".split("").map(&:ord)
-// bytes.each {|b| a[b] = 1}
-// puts a.inspect
-// ```
-const ALPHABET_TABLE: [u8; 256] = [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-];
+// For every byte in the ASCII table, the corresponding entry is 1
+// if that byte is in ALPHABET, and 0 otherwise.
+const ALPHABET_TABLE: [u8; 256] = {
+    let mut table = [0_u8; 256];
+    let mut i = 0;
+    while i < ALPHABET.len() {
+        table[ALPHABET[i] as usize] = 1;
+        i += 1;
+    }
+    table
+};
 
 pub fn inner(encoded: &[u8]) -> Result<Vec<u8>, DecodeError> {
     // `xexax` is the encoded representation of an empty byte string. Test for
