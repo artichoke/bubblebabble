@@ -37,17 +37,11 @@ assert_eq!(boba::decode(b"xexax"), Ok(vec![]));
 
 Boba is `no_std` compatible with a required dependency on the [`alloc`] crate.
 
-Boba has several Cargo features, all of which are enabled by default:
-
-- **std** - Adds a dependency on [`std`], the Rust Standard Library. This
-  feature enables [`std::error::Error`] implementations on error types in this
-  crate. Enabling the **std** feature also enables the **alloc** feature.
-
 `boba` is [fuzzed](fuzz/fuzz_targets) with [cargo-fuzz].
 
 ## Minimum Rust Version Policy
 
-This crate's minimum supported `rustc` version (MSRV) is `1.42.0`.
+This crate's minimum supported `rustc` version (MSRV) is `1.83.0`.
 
 MSRV may be bumped in minor version releases.
 

@@ -52,7 +52,7 @@ pub fn inner(encoded: &[u8]) -> Result<Vec<u8>, DecodeError> {
     if let Some((_, pos)) = enc
         .iter()
         .zip(1_usize..) // start `pos` at 1 because we stripped off a leading 'x'
-        .find(|(&byte, _)| ALPHABET_TABLE[usize::from(byte)] == 0)
+        .find(|&(&byte, _)| ALPHABET_TABLE[usize::from(byte)] == 0)
     {
         return Err(DecodeError::InvalidByte(pos));
     }

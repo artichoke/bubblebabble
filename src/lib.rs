@@ -7,6 +7,8 @@
 #![warn(missing_docs)]
 #![warn(missing_debug_implementations)]
 #![warn(rust_2018_idioms)]
+#![warn(rust_2021_compatibility)]
+#![warn(rust_2024_compatibility)]
 #![warn(trivial_casts, trivial_numeric_casts)]
 #![warn(unused_qualifications)]
 #![warn(variant_size_differences)]
@@ -27,6 +29,9 @@
 //!
 //! Bubble Babble is part of the Digest libraries in [Perl][perl-bubblebabble]
 //! and [Ruby][ruby-bubblebabble].
+//!
+//! [perl-bubblebabble]: https://metacpan.org/pod/Digest::BubbleBabble
+//! [ruby-bubblebabble]: https://ruby-doc.org/stdlib-3.1.1/libdoc/digest/rdoc/Digest.html#method-c-bubblebabble
 //!
 //! # Usage
 //!
@@ -64,31 +69,11 @@
 //!
 //! Boba is `no_std` compatible with a required dependency on the [`alloc`]
 //! crate.
-//!
-//! Boba has several Cargo features, all of which are enabled by default:
-//!
-//! - **std** - Adds a dependency on [`std`], the Rust Standard Library. This
-//!   feature enables [`std::error::Error`] implementations on error types in
-//!   this crate. Enabling the **std** feature also enables the **alloc**
-//!   feature.
-//!
-#![cfg_attr(
-    not(feature = "std"),
-    doc = "[`std`]: https://doc.rust-lang.org/stable/std/index.html"
-)]
-#![cfg_attr(
-    not(feature = "std"),
-    doc = "[`std::error::Error`]: https://doc.rust-lang.org/stable/std/error/trait.Error.html"
-)]
-//! [perl-bubblebabble]: https://metacpan.org/pod/Digest::BubbleBabble
-//! [ruby-bubblebabble]: https://ruby-doc.org/stdlib-3.1.1/libdoc/digest/rdoc/Digest.html#method-c-bubblebabble
 
 #![no_std]
 #![doc(html_root_url = "https://docs.rs/boba/5.0.0")]
 
 extern crate alloc;
-#[cfg(feature = "std")]
-extern crate std;
 
 use alloc::string::String;
 use alloc::vec::Vec;
@@ -140,8 +125,7 @@ pub enum DecodeError {
     MalformedTrailer,
 }
 
-#[cfg(feature = "std")]
-impl std::error::Error for DecodeError {}
+impl core::error::Error for DecodeError {}
 
 impl fmt::Display for DecodeError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -152,8 +136,7 @@ impl fmt::Display for DecodeError {
             Self::ExpectedVowel => f.write_str("Expected vowel, got something else"),
             Self::InvalidByte(pos) => write!(
                 f,
-                "Encountered byte outside of encoding alphabet at position {}",
-                pos
+                "Encountered byte outside of encoding alphabet at position {pos}"
             ),
             Self::MalformedHeader => f.write_str("Missing required 'x' header"),
             Self::MalformedTrailer => f.write_str("Missing required 'x' trailer"),
@@ -332,7 +315,7 @@ mod tests {
         ];
         for tc in test_cases {
             let mut buf = String::new();
-            write!(&mut buf, "{}", tc).unwrap();
+            write!(&mut buf, "{tc}").unwrap();
             assert!(!buf.is_empty());
         }
     }
@@ -355,14 +338,5 @@ mod tests {
 // This module and macro declaration should be kept at the end of the file, in
 // order to not interfere with code coverage.
 #[cfg(doctest)]
-macro_rules! readme {
-    ($x:expr) => {
-        #[doc = $x]
-        mod readme {}
-    };
-    () => {
-        readme!(include_str!("../README.md"));
-    };
-}
-#[cfg(doctest)]
-readme!();
+#[doc = include_str!("../README.md")]
+mod readme {}
