@@ -49,7 +49,7 @@ jobs:
           persist-credentials: false
 
       - name: Install Rust toolchain
-        uses: artichoke/setup-rust/audit@v2.0.0
+        uses: artichoke/setup-rust/audit@v2.0.1
 
       - name: Generate Cargo.lock
         run: |

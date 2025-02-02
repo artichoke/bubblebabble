@@ -31,7 +31,7 @@ jobs:
           persist-credentials: false
 
       - name: Install Rust toolchain
-        uses: artichoke/setup-rust/rustdoc@v2.0.0
+        uses: artichoke/setup-rust/rustdoc@v2.0.1
 
       - name: Check docs with no default features
         run: cargo doc --workspace --no-default-features

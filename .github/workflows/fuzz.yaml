@@ -18,7 +18,7 @@ jobs:
           persist-credentials: false
 
       - name: Install Rust toolchain
-        uses: artichoke/setup-rust/build-and-test@v2.0.0
+        uses: artichoke/setup-rust/build-and-test@v2.0.1
         with:
           toolchain: nightly
 
@@ -41,7 +41,7 @@ jobs:
           persist-credentials: false
 
       - name: Install Rust toolchain
-        uses: artichoke/setup-rust/build-and-test@v2.0.0
+        uses: artichoke/setup-rust/build-and-test@v2.0.1
         with:
           toolchain: nightly
 
@@ -64,7 +64,7 @@ jobs:
           persist-credentials: false
 
       - name: Install Rust toolchain
-        uses: artichoke/setup-rust/build-and-test@v2.0.0
+        uses: artichoke/setup-rust/build-and-test@v2.0.1
         with:
           toolchain: nightly
 
