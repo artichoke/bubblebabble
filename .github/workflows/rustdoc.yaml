@@ -9,6 +9,7 @@ name: Documentation
       - trunk
   schedule:
     - cron: "0 0 * * TUE"
+permissions: {}
 concurrency:
   group: docs-${{ github.head_ref }}
 env:
@@ -17,6 +18,8 @@ jobs:
   rustdoc:
     name: Build Rust API docs
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       RUSTDOCFLAGS: -D warnings -D rustdoc::broken_intra_doc_links --cfg docsrs
       RUST_BACKTRACE: 1
@@ -24,6 +27,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
+        with:
+          persist-credentials: false
 
       - name: Install Rust toolchain
         uses: artichoke/setup-rust/rustdoc@v2.0.0

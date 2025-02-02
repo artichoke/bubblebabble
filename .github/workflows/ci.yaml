@@ -9,6 +9,7 @@ name: CI
       - trunk
   schedule:
     - cron: "0 0 * * TUE"
+permissions: {}
 jobs:
   build:
     name: Build
@@ -23,6 +24,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
+        with:
+          persist-credentials: false
 
       - name: Install Rust toolchain
         uses: artichoke/setup-rust/build-and-test@v2.0.0
@@ -53,6 +56,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
+        with:
+          persist-credentials: false
 
       - name: Install Rust toolchain
         uses: artichoke/setup-rust/build-and-test@v2.0.0
@@ -83,6 +88,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
+        with:
+          persist-credentials: false
 
       - name: Install Rust toolchain
         uses: artichoke/setup-rust/check-minimal-versions@v2.0.0
@@ -104,6 +111,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
+        with:
+          persist-credentials: false
 
       - name: Install Rust toolchain
         uses: artichoke/setup-rust/lint-and-format@v2.0.0
@@ -122,6 +131,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
+        with:
+          persist-credentials: false
 
       - name: Install Ruby toolchain
         uses: ruby/setup-ruby@2654679fe7f7c29875c669398a8ec0791b8a64a1 # v1.215.0
@@ -138,6 +149,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js runtime
         uses: actions/setup-node@v4.2.0
