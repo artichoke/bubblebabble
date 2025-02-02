@@ -71,7 +71,7 @@
 //! crate.
 
 #![no_std]
-#![doc(html_root_url = "https://docs.rs/boba/5.0.0")]
+#![doc(html_root_url = "https://docs.rs/boba/6.0.0")]
 
 extern crate alloc;
 
