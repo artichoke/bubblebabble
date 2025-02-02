@@ -14,13 +14,19 @@
       - .github/workflows/repo-labels.yaml
   schedule:
     - cron: "0 0 * * TUE"
+permissions: {}
 name: Create Repository Labels
 jobs:
   labels:
     name: Synchronize repository labels
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
     steps:
       - uses: actions/checkout@v4.2.2
+        with:
+          persist-credentials: false
 
       - name: Sync GitHub Issue Labels
         uses: crazy-max/ghaction-github-labeler@b54af0c25861143e7c8813d7cbbf46d2c341680c # v5.1.0
