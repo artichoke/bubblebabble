@@ -3,8 +3,8 @@ name = "boba"
 version = "5.0.0" # remember to set `html_root_url` in `src/lib.rs`.
 authors = ["Ryan Lopopolo <rjl@hyperbo.la>"]
 license = "MIT"
-edition = "2018"
-rust-version = "1.42.0"
+edition = "2021"
+rust-version = "1.83.0"
 readme = "README.md"
 repository = "https://github.com/artichoke/boba"
 documentation = "https://docs.rs/boba"
@@ -15,10 +15,6 @@ categories = ["encoding", "no-std"]
 include = ["src/**/*", "tests/**/*", "LICENSE", "README.md"]
 
 [features]
-default = ["std"]
-# Enable dependency on `std`, the Rust standard library. This feature enables
-# `std::error::Error` implementations on the error types in `boba`.
-std = []
 
 [dependencies]
 
